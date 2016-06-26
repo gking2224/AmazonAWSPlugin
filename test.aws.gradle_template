@@ -1,0 +1,11 @@
+
+test {
+    
+    systemProperty 'aws.accessKeyId', '<access key id>'
+    systemProperty 'aws.secretKey', '<secret key>'
+    systemProperty 'aws.region', 'eu-west-1'
+    
+    
+    systemProperty 'aws.testinstance.instanceid', '<instance id>'
+    systemProperty 'aws.testinstance.publicdns', '<public dns>'
+}
