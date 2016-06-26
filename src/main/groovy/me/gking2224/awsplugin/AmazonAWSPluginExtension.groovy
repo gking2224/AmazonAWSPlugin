@@ -163,7 +163,6 @@ class AmazonAWSPluginExtension {
 
     private AmazonEC2 initClient() {
         AmazonEC2Client client = createClient(com.amazonaws.services.ec2.AmazonEC2Client.class, profileName);
-        println "Using region "+region
         client.setRegion(getActiveRegion(region));
         return client;
     }

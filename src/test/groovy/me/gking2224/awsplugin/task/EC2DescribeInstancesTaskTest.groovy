@@ -26,9 +26,7 @@ class EC2DescribeInstancesTaskTest {
        @Test
        public void testTaskDefined() {
            def i = System.getProperty("aws.testinstance.instanceid")
-           println "system property instance id: $i"
            task.instanceId = i
-           println "instanceid: $task.instanceId"
            task.execute()
            assert task.result != null
            def instances =  task.result.reservations.instances.flatten()
