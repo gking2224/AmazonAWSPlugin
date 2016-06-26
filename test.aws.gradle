@@ -1,0 +1,11 @@
+
+test {
+    
+    systemProperty 'aws.accessKeyId', 'AKIAJ62P3CEDOIX74J5Q'
+    systemProperty 'aws.secretKey', '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'
+    systemProperty 'aws.region', 'eu-west-1'
+    
+    
+    systemProperty 'aws.testinstance.instanceid', 'i-dc516256'
+    systemProperty 'aws.testinstance.publicdns', 'ec2-54-171-180-65.eu-west-1.compute.amazonaws.com'
+}

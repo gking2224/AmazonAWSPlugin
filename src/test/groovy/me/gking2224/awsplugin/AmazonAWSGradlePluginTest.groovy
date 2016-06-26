@@ -24,5 +24,4 @@ class AmazonAWSGradlePluginTest {
         assertTrue(project.tasks.ec2DescribeInstances instanceof EC2DescribeInstancesTask)
     }
     
-
 }
