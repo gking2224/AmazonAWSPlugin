@@ -1,7 +1,11 @@
 buildscript {
     repositories {
         mavenCentral()
+        mavenLocal()
         jcenter()
+    }
+    dependencies {
+        classpath "me.gking2224:BuildToolsGradlePlugin:0.1.1-SNAPSHOT"
     }
 }
 
@@ -9,7 +13,9 @@ plugins {
   id 'groovy'
 }
 
+apply plugin: 'maven'
 apply plugin: 'eclipse'
+apply plugin: 'me.gking2224.buildtools'
 
 jar {
     
@@ -53,9 +59,7 @@ configurations {
   published
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.7'
-}
+task wrapper(type: Wrapper)
 
 eclipse {
     project {
@@ -86,5 +90,3 @@ eclipse {
         downloadJavadoc = true
     }
 }
-
-
