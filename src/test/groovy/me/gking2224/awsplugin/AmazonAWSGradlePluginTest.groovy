@@ -20,8 +20,7 @@ class AmazonAWSGradlePluginTest {
     }
     @Test
     public void testTaskDefined() {
-        
+        assertTrue(project.tasks.ec2DescribeInstances != null)
         assertTrue(project.tasks.ec2DescribeInstances instanceof EC2DescribeInstancesTask)
     }
-    
 }

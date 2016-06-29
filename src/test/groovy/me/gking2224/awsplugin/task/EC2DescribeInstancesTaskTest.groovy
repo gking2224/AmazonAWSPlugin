@@ -9,7 +9,6 @@ import org.junit.Test
 class EC2DescribeInstancesTaskTest {
     
        def project
-       def task
        def region = System.getProperty("aws.region")
        
        @Before
@@ -21,17 +20,6 @@ class EC2DescribeInstancesTaskTest {
            project.awsplugin {
                region = this.region
            }
-           task = project.tasks.ec2DescribeInstances
-       }
-       @Test
-       public void testTaskDefined() {
-           def i = System.getProperty("aws.testinstance.instanceid")
-           task.instanceId = i
-           task.execute()
-           assert task.result != null
-           def instances =  task.result.reservations.instances.flatten()
-           assert instances.size() == 1
-           def dns = instances.find().publicDnsName
-           assert dns == System.getProperty("aws.testinstance.publicdns")
+           assert project.tasks.ec2DescribeInstances
        }
 }
