@@ -35,7 +35,7 @@ repositories {
 }
 
 // include test configuration
-apply from: 'test.aws.gradle'
+if (file('test.aws.gradle').exists()) apply from: 'test.aws.gradle'
 
 // versions
 ext {
