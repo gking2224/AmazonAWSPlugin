@@ -8,6 +8,8 @@ buildscript {
         classpath "me.gking2224:BuildToolsGradlePlugin:0.1.2-SNAPSHOT"
     }
 }
+// include test configuration
+if (file('test.aws.gradle').exists()) apply from: 'test.aws.gradle'
 
 plugins {
   id 'groovy'
@@ -34,8 +36,6 @@ repositories {
     mavenCentral()
 }
 
-// include test configuration
-if (file('test.aws.gradle').exists()) apply from: 'test.aws.gradle'
 
 // versions
 ext {
