@@ -55,6 +55,15 @@ dependencies {
     compile "com.amazonaws:aws-java-sdk-iam:$awsJavaSdkVersion"
     
 }
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "http://artifactory.gking2224.me/artifactory/libs-snapshot-local/") {
+                authentication(userName: "gking2224", password: System.getProperty("artifactory.password"))
+            }
+        }
+    }
+}
 
 configurations {
   published
