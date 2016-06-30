@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "me.gking2224:BuildToolsGradlePlugin:0.1.1"
+        classpath "me.gking2224:BuildToolsGradlePlugin:0.1.2-SNAPSHOT"
     }
 }
 
@@ -85,9 +85,15 @@ eclipse {
                 classpath.entries.findAll {
                     it instanceof org.gradle.plugins.ide.eclipse.model.SourceFolder && it.path.startsWith("src/test/")
                 }*.output = "build/test-classes"
+                classpath.entries.findAll {
+                    it instanceof org.gradle.plugins.ide.eclipse.model.SourceFolder && it.path.startsWith("src/integration/")
+                }*.output = "build/integration-classes"
             }
         }
         downloadSources = true
         downloadJavadoc = true
     }
 }
+
+if (project.dryRun) println "1"
+if (project.isDryRun) println "2"
