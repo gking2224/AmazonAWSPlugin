@@ -55,15 +55,6 @@ dependencies {
     compile "com.amazonaws:aws-java-sdk-iam:$awsJavaSdkVersion"
     
 }
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: System.getProperty("artifactory.snapshot.url")) {
-                authentication(userName: System.getProperty("artifactory.username"), password: System.getProperty("artifactory.password"))
-            }
-        }
-    }
-}
 
 configurations {
   published
