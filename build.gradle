@@ -94,6 +94,3 @@ eclipse {
         downloadJavadoc = true
     }
 }
-
-if (project.dryRun) println "1"
-if (project.isDryRun) println "2"
