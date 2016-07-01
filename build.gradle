@@ -7,7 +7,7 @@ buildscript {
         maven {url= "http://artifactory.gking2224.me/artifactory/libs-snapshot" }
     }
     dependencies {
-        classpath "me.gking2224:BuildToolsGradlePlugin:0.1.3-SNAPSHOT"
+        classpath "me.gking2224:BuildToolsGradlePlugin:0.1.3"
     }
 }
 
@@ -19,17 +19,10 @@ apply plugin: 'maven'
 apply plugin: 'eclipse'
 apply plugin: 'me.gking2224.buildtools'
 
-task "s"
 jar {
     
 }
 
-println System.getProperty("system.aws.accessKeyId")
-println System.getProperty("aws.accessKeyId")
-println project["aws.accessKeyId"]
-println System.getProperty("system.awsAccessKeyId")
-println System.getProperty("awsAccessKeyId")
-println project["awsAccessKeyId"]
 ext {
     artifactId = "me.gking2224.awsplugin.artifactid" // what does this do?
     defaultEncoding = "UTF-8"
