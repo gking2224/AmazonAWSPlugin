@@ -38,7 +38,7 @@ class AmazonAWSPluginExtension {
 
     def int proxyPort = -1;
 
-    private AWSCredentialsProvider credentialsProvider;
+    def AWSCredentialsProvider credentialsProvider;
     
     private AmazonEC2Client ec2Client
 
@@ -56,6 +56,7 @@ class AmazonAWSPluginExtension {
         if(credentialsProvider != null) {
             providers.add(credentialsProvider);
         }
+        providers.add(new GradlePropertiesCredentialsProvider(project));
         providers.add(new EnvironmentVariableCredentialsProvider());
         providers.add(new SystemPropertiesCredentialsProvider());
         if (Strings.isNullOrEmpty(profileName) == false) {
@@ -160,10 +161,19 @@ class AmazonAWSPluginExtension {
             return msg.substring(arnIdx, arnSpace);
         }
     }
+    
+    def credentials(Closure c) {
+        credentialsProvider = new CredentialsHandler()
+        c.delegate = credentialsProvider
+        c()
+        
+    }
 
     private AmazonEC2 initClient() {
         AmazonEC2Client client = createClient(com.amazonaws.services.ec2.AmazonEC2Client.class, profileName);
-        client.setRegion(getActiveRegion(region));
+        def region = getActiveRegion(region)
+        client.setRegion(region);
+        println "Creating AmazonEC2 client with region $region"
         return client;
     }
 }
