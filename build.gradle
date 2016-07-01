@@ -24,6 +24,9 @@ jar {
     
 }
 
+println System.getProperty("system.aws.accessKeyId")
+println System.getProperty("aws.accessKeyId")
+println project["aws.accessKeyId"]
 ext {
     artifactId = "me.gking2224.awsplugin.artifactid" // what does this do?
     defaultEncoding = "UTF-8"
