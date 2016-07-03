@@ -11,7 +11,10 @@ import com.amazonaws.services.ec2.model.Filter
 
 public abstract class AbstractEC2Task extends DefaultTask {
 
-    static final String TOKEN_PREFIX = "me.gking2224.random"
+    static final String DEFAULT_TOKEN_PREFIX = "me.gking2224.random"
+    
+    def clientTokenPrefix = DEFAULT_TOKEN_PREFIX
+    
     public AbstractEC2Task() {
     }
     
@@ -21,9 +24,7 @@ public abstract class AbstractEC2Task extends DefaultTask {
     }
     
     def getUniqueToken() {
-        def sr = new SecureRandom()
-        def seed = sr.generateSeed(20)
-        return "${TOKEN_PREFIX}_${System.currentTimeMillis()}${Math.abs(sr.nextInt())}"
+        return project.randomString()
     }
     
     def filter(String n, String... values) {

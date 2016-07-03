@@ -2,7 +2,9 @@ package me.gking2224.awsplugin
 
 import java.lang.reflect.Constructor
 
+import org.apache.log4j.spi.LoggerFactory
 import org.gradle.api.Project
+import org.slf4j.Logger
 
 import com.amazonaws.AmazonServiceException
 import com.amazonaws.AmazonWebServiceClient
@@ -25,6 +27,8 @@ import com.google.common.base.Strings
 
 
 class AmazonAWSPluginExtension {
+    
+    Logger logger = LoggerFactory.getLogger(AmazonAWSPluginExtension.class)
     
     private static final String KEY = "awsplugin"
     
@@ -173,7 +177,7 @@ class AmazonAWSPluginExtension {
         AmazonEC2Client client = createClient(com.amazonaws.services.ec2.AmazonEC2Client.class, profileName);
         def region = getActiveRegion(region)
         client.setRegion(region);
-        println "Creating AmazonEC2 client with region $region"
+        logger.info "Creating AmazonEC2 client with region $region"
         return client;
     }
 }
