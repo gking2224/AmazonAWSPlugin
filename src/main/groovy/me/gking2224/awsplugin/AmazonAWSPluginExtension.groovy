@@ -2,9 +2,8 @@ package me.gking2224.awsplugin
 
 import java.lang.reflect.Constructor
 
-import org.apache.log4j.spi.LoggerFactory
 import org.gradle.api.Project
-import org.slf4j.Logger
+import org.slf4j.LoggerFactory;
 
 import com.amazonaws.AmazonServiceException
 import com.amazonaws.AmazonWebServiceClient
@@ -23,12 +22,11 @@ import com.amazonaws.services.ec2.AmazonEC2Client
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagement
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagementClient
 import com.amazonaws.services.identitymanagement.model.GetUserResult
-import com.google.common.base.Strings
 
 
 class AmazonAWSPluginExtension {
     
-    Logger logger = LoggerFactory.getLogger(AmazonAWSPluginExtension.class)
+    def logger = LoggerFactory.getLogger(AmazonAWSPluginExtension.class)
     
     private static final String KEY = "awsplugin"
     
@@ -63,7 +61,7 @@ class AmazonAWSPluginExtension {
         providers.add(new GradlePropertiesCredentialsProvider(project));
         providers.add(new EnvironmentVariableCredentialsProvider());
         providers.add(new SystemPropertiesCredentialsProvider());
-        if (Strings.isNullOrEmpty(profileName) == false) {
+        if (profileName == null || profileName == "") {
 //            providers.add(new AwsCliConfigProfileCredentialsProvider(profileName));
             providers.add(new ProfileCredentialsProvider(profileName));
         }
