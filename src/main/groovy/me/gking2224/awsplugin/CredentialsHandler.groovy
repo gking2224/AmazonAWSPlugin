@@ -1,7 +1,6 @@
 package me.gking2224.awsplugin
 
-import static com.amazonaws.SDKGlobalConfiguration.ACCESS_KEY_SYSTEM_PROPERTY
-import static com.amazonaws.SDKGlobalConfiguration.SECRET_KEY_SYSTEM_PROPERTY
+import org.slf4j.LoggerFactory
 
 import com.amazonaws.AmazonClientException
 import com.amazonaws.auth.AWSCredentials
@@ -11,6 +10,8 @@ import com.amazonaws.util.StringUtils
 
 
 class CredentialsHandler implements AWSCredentialsProvider {
+    
+    def logger = LoggerFactory.getLogger(CredentialsHandler.class)
     
     def accessKeyId
     def secretKey
@@ -27,7 +28,6 @@ class CredentialsHandler implements AWSCredentialsProvider {
             throw new AmazonClientException(
                     "Unable to load AWS credentials from configured credentials")
         }
-        println "Using AWS credentials from config block"
         return new BasicAWSCredentials(accessKeyId, secretKey);
     }
 

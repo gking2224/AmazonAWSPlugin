@@ -24,7 +24,6 @@ class GradlePropertiesCredentialsProvider implements AWSCredentialsProvider {
                     "Unable to load AWS credentials from properties")
         }
         else {
-            println "Using AWS credentials from gradle properties"
             return new BasicAWSCredentials(project.accessKeyId, project.secretKey);
         }
     }
