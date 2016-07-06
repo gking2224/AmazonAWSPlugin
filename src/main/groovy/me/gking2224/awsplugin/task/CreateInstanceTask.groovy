@@ -4,7 +4,6 @@ import org.gradle.api.logging.Logger
 import org.gradle.api.tasks.TaskAction
 import org.slf4j.LoggerFactory
 
-import com.amazonaws.AmazonClientException
 import com.amazonaws.services.ec2.model.DescribeInstancesRequest
 import com.amazonaws.services.ec2.model.DescribeInstancesResult
 import com.amazonaws.services.ec2.model.Filter
@@ -19,8 +18,6 @@ class CreateInstanceTask extends AbstractEC2Task {
     static final String INSTANCE_IDS = "instance-ids"
     static final String STATE_NAME_FILTER = "instance-state-name"
     static final String STATE_RUNNING = "running"
-    
-    Logger logger = LoggerFactory.getLogger(this.class)
     
     def count = 1
     def imageId
