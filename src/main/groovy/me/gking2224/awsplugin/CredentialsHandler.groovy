@@ -22,12 +22,13 @@ class CredentialsHandler implements AWSCredentialsProvider {
     @Override
     public AWSCredentials getCredentials() {
 
-        if (StringUtils.isNullOrEmpty(accessKey)
+        if (StringUtils.isNullOrEmpty(accessKeyId)
                 || StringUtils.isNullOrEmpty(secretKey)) {
 
             throw new AmazonClientException(
                     "Unable to load AWS credentials from configured credentials")
         }
+        logger.debug("Authenticating with build configuration")
         return new BasicAWSCredentials(accessKeyId, secretKey);
     }
 

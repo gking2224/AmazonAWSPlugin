@@ -13,7 +13,7 @@ import com.amazonaws.services.ec2.model.RunInstancesResult
 
 
 class CreateInstanceTask extends AbstractEC2Task {
-    
+
     static final String CLIENT_TOKEN_FILTER = "client-token"
     static final String INSTANCE_IDS = "instance-ids"
     static final String STATE_NAME_FILTER = "instance-state-name"
@@ -41,7 +41,7 @@ class CreateInstanceTask extends AbstractEC2Task {
         logger.debug "  timeout=$timeout (secs)"
         logger.debug "  interval=$interval (secs)"
         def token = getUniqueToken()
-        logger.debug "Using client token $token"
+        logger.debug "  clientToken=$token"
         def runRequest = new RunInstancesRequest()
         runRequest.setClientToken(token)
         runRequest.setImageId(imageId)
@@ -65,6 +65,7 @@ class CreateInstanceTask extends AbstractEC2Task {
             
             def startTime = System.currentTimeMillis()
             def keepTrying = project.withinTimeout(startTime, timeout*1000)
+            logger.info "Fetching details for $instanceId"
             describeResult = getClient().describeInstances(describeRequest)
             Object sema4 = new Object()
             synchronized (sema4) {
@@ -77,11 +78,13 @@ class CreateInstanceTask extends AbstractEC2Task {
                 if (describeResult.reservations.size() == 0) {
                     throw new RuntimeException("Reached timeout waiting for instance to be ready")
                 }
+                logger.info "Server ${instanceId} ready [publicDnsName:$publicDnsName, publicIP:$publicIpAddress]"
                 ext.instance = describeResult.reservations[0].instances[0]
                 ext.publicDnsName = instance.publicDnsName
                 ext.publicIpAddress = instance.publicIpAddress
+                logger.debug "Waiting for a further $postInitWaitTime seconds"
                 sema4.wait(postInitWaitTime * 1000)
-                logger.info "Server ${instanceId} ready [publicDnsName:$publicDnsName, publicIP:$publicIpAddress]"
+                logger.info "Wait complete"
             }
         }, {
             ext.instanceId = "i-dummy"
