@@ -2,8 +2,8 @@ buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
-        maven {url= "https://artifactory.gking2224.me/artifactory/libs-release" }
-        maven {url= "https://artifactory.gking2224.me/artifactory/libs-snapshot" }
+//        maven {url= "https://artifactory.gking2224.me/artifactory/libs-release" }
+//        maven {url= "https://artifactory.gking2224.me/artifactory/libs-snapshot" }
     }
     dependencies {
         classpath "me.gking2224:BuildToolsGradlePlugin:0.1.8-SNAPSHOT"
@@ -30,8 +30,8 @@ targetCompatibility = 1.8
 repositories {
     mavenLocal()
     mavenCentral()
-    maven {url= "https://artifactory.gking2224.me/artifactory/libs-release" }
-    maven {url= "https://artifactory.gking2224.me/artifactory/libs-snapshot" }
+//    maven {url= "https://artifactory.gking2224.me/artifactory/libs-release" }
+//    maven {url= "https://artifactory.gking2224.me/artifactory/libs-snapshot" }
 }
 
 // versions
