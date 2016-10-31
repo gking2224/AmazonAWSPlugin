@@ -3,7 +3,7 @@ package me.gking2224.awsplugin
 import java.lang.reflect.Constructor
 
 import org.gradle.api.Project
-import org.slf4j.LoggerFactory;
+import org.slf4j.LoggerFactory
 
 import com.amazonaws.AmazonServiceException
 import com.amazonaws.AmazonWebServiceClient
@@ -17,8 +17,9 @@ import com.amazonaws.auth.profile.ProfileCredentialsProvider
 import com.amazonaws.regions.Region
 import com.amazonaws.regions.RegionUtils
 import com.amazonaws.regions.Regions
-import com.amazonaws.services.ec2.AmazonEC2
 import com.amazonaws.services.ec2.AmazonEC2Client
+import com.amazonaws.services.ecr.AmazonECRClient
+import com.amazonaws.services.elasticloadbalancing.AmazonElasticLoadBalancingClient
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagement
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagementClient
 import com.amazonaws.services.identitymanagement.model.GetUserResult
@@ -43,14 +44,28 @@ class AmazonAWSPluginExtension {
     def AWSCredentialsProvider credentialsProvider;
     
     private AmazonEC2Client ec2Client
+    
+    private AmazonElasticLoadBalancingClient elbClient
+    
+    private AmazonECRClient ecrClient
 
     public AmazonAWSPluginExtension(Project project) {
         this.project = project;
     }
     
     def getEc2Client() {
-        if (ec2Client == null) ec2Client = initClient();
-        ec2Client
+        if (ec2Client == null) ec2Client = initClient(com.amazonaws.services.ec2.AmazonEC2Client.class);
+        return ec2Client
+    }
+    
+    def getElbClient() {
+        if (elbClient == null) elbClient = initClient(com.amazonaws.services.elasticloadbalancing.AmazonElasticLoadBalancingClient.class);
+        return elbClient
+    }
+    
+    def getEcrClient() {
+        if (ecrClient == null) ecrClient = initClient(com.amazonaws.services.ecr.AmazonECRClient.class);
+        return ecrClient
     }
     
     public AWSCredentialsProvider newCredentialsProvider(String profileName) {
@@ -171,11 +186,11 @@ class AmazonAWSPluginExtension {
         
     }
 
-    private AmazonEC2 initClient() {
-        AmazonEC2Client client = createClient(com.amazonaws.services.ec2.AmazonEC2Client.class, profileName);
+    private AmazonWebServiceClient initClient(Class clz) {
+        AmazonWebServiceClient client = createClient(clz, profileName);
         def region = getActiveRegion(region)
         client.setRegion(region);
-        logger.info "Creating AmazonEC2 client with region $region"
+        logger.info "Creating client $clz with region $region"
         return client;
     }
 }

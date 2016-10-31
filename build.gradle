@@ -38,7 +38,7 @@ repositories {
 ext {
     // using this version to be compatible with gradleApi(), which adds its own version and causes conflicts
     // see https://issues.gradle.org/browse/GRADLE-2516
-    awsJavaSdkVersion = "1.9.19"
+    awsJavaSdkVersion = "1.11.48"
     junitVersion = '4.11'
 }
 
@@ -51,6 +51,9 @@ dependencies {
     
     compile "com.amazonaws:aws-java-sdk-ec2:$awsJavaSdkVersion"
     compile "com.amazonaws:aws-java-sdk-iam:$awsJavaSdkVersion"
+    compile "com.amazonaws:aws-java-sdk-ecs:$awsJavaSdkVersion"
+    compile "com.amazonaws:aws-java-sdk-ecr:$awsJavaSdkVersion"
+    compile "com.amazonaws:aws-java-sdk-elasticloadbalancing:$awsJavaSdkVersion"
     
 }
 

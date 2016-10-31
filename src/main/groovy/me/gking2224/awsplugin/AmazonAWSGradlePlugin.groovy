@@ -6,7 +6,7 @@ import org.gradle.api.Project
 import com.amazonaws.services.ec2.AmazonEC2
 import com.amazonaws.services.ec2.AmazonEC2Client
 
-import me.gking2224.awsplugin.task.EC2DescribeInstancesTask;
+import me.gking2224.awsplugin.task.ec2.EC2DescribeInstancesTask;;
 
 class AmazonAWSGradlePlugin implements Plugin<Project> {
 

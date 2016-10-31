@@ -1,15 +1,12 @@
-package me.gking2224.awsplugin.task;
-
-import java.security.SecureRandom
+package me.gking2224.awsplugin.task.ec2;
 
 import me.gking2224.awsplugin.AmazonAWSPluginExtension
-
-import org.gradle.api.DefaultTask
+import me.gking2224.awsplugin.task.AbstractAWSTask
 
 import com.amazonaws.services.ec2.AmazonEC2Client
 import com.amazonaws.services.ec2.model.Filter
 
-public abstract class AbstractEC2Task extends DefaultTask {
+public abstract class AbstractEC2Task extends AbstractAWSTask<AmazonEC2Client> {
 
     static final String DEFAULT_TOKEN_PREFIX = "me.gking2224.random"
     
@@ -18,7 +15,7 @@ public abstract class AbstractEC2Task extends DefaultTask {
     public AbstractEC2Task() {
     }
     
-    protected AmazonEC2Client getClient() {
+    AmazonEC2Client getClient() {
         AmazonAWSPluginExtension ext = project.extensions.getByType(AmazonAWSPluginExtension.class)
         ext.getEc2Client()
     }

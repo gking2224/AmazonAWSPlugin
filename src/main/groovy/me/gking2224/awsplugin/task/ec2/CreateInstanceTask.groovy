@@ -1,4 +1,4 @@
-package me.gking2224.awsplugin.task
+package me.gking2224.awsplugin.task.ec2
 
 import org.gradle.api.logging.Logger
 import org.gradle.api.tasks.TaskAction

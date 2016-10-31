@@ -1,7 +1,9 @@
 package me.gking2224.awsplugin
 
-import static org.junit.Assert.*
-import me.gking2224.awsplugin.task.EC2DescribeInstancesTask
+import static org.junit.Assert.assertNotNull
+import static org.junit.Assert.assertTrue
+
+import me.gking2224.awsplugin.task.ec2.EC2DescribeInstancesTask
 
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.Before
