@@ -34,6 +34,7 @@ class RegisterTaskDefinition extends AbstractECSTask {
             
             td.setRevision(td.getRevision() + 1)
             ContainerDefinition cd = td.getContainerDefinitions().get(0)
+            logger.info("Setting image to "+image)
             cd.setImage(image)
             
             RegisterTaskDefinitionRequest request = new RegisterTaskDefinitionRequest()
