@@ -19,6 +19,7 @@ import com.amazonaws.regions.RegionUtils
 import com.amazonaws.regions.Regions
 import com.amazonaws.services.ec2.AmazonEC2Client
 import com.amazonaws.services.ecr.AmazonECRClient
+import com.amazonaws.services.ecs.AmazonECSClient
 import com.amazonaws.services.elasticloadbalancing.AmazonElasticLoadBalancingClient
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagement
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagementClient
@@ -48,6 +49,8 @@ class AmazonAWSPluginExtension {
     private AmazonElasticLoadBalancingClient elbClient
     
     private AmazonECRClient ecrClient
+    
+    private AmazonECSClient ecsClient
 
     public AmazonAWSPluginExtension(Project project) {
         this.project = project;
@@ -66,6 +69,11 @@ class AmazonAWSPluginExtension {
     def getEcrClient() {
         if (ecrClient == null) ecrClient = initClient(com.amazonaws.services.ecr.AmazonECRClient.class);
         return ecrClient
+    }
+    
+    def getEcsClient() {
+        if (ecsClient == null) ecsClient = initClient(com.amazonaws.services.ecs.AmazonECSClient.class);
+        return ecsClient
     }
     
     public AWSCredentialsProvider newCredentialsProvider(String profileName) {
