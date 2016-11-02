@@ -18,7 +18,7 @@ class AmazonAWSGradlePlugin implements Plugin<Project> {
 		project.extensions.create(AmazonAWSPluginExtension.KEY, AmazonAWSPluginExtension, project)
         
         // define tasks
-		project.task(EC2DescribeInstancesTask.NAME, type:EC2DescribeInstancesTask)
+        project.task(EC2DescribeInstancesTask.NAME, type:EC2DescribeInstancesTask)
 	}
 }
 

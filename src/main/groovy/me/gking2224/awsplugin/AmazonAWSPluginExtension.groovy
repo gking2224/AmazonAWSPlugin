@@ -17,6 +17,7 @@ import com.amazonaws.auth.profile.ProfileCredentialsProvider
 import com.amazonaws.regions.Region
 import com.amazonaws.regions.RegionUtils
 import com.amazonaws.regions.Regions
+import com.amazonaws.services.autoscaling.AmazonAutoScalingClient
 import com.amazonaws.services.ec2.AmazonEC2Client
 import com.amazonaws.services.ecr.AmazonECRClient
 import com.amazonaws.services.ecs.AmazonECSClient
@@ -44,6 +45,8 @@ class AmazonAWSPluginExtension {
 
     def AWSCredentialsProvider credentialsProvider;
     
+    def clients = [:]
+    
     private AmazonEC2Client ec2Client
     
     private AmazonElasticLoadBalancingClient elbClient
@@ -51,9 +54,16 @@ class AmazonAWSPluginExtension {
     private AmazonECRClient ecrClient
     
     private AmazonECSClient ecsClient
+    
+    private AmazonAutoScalingClient autoScalingClient
 
     public AmazonAWSPluginExtension(Project project) {
         this.project = project;
+    }
+    
+    protected <T extends AmazonWebServiceClient> T getClient(Class<T> clz) {
+        if (clients[clz] == null) clients[clz] = initClient(clz)
+        return clients[clz]
     }
     
     def getEc2Client() {

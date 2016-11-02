@@ -19,6 +19,9 @@ class RegisterTaskDefinition extends AbstractECSTask {
     
     def family
     def image
+    
+    def taskDefinitionArn
+    def taskDefinitionName
 
     public RegisterTaskDefinition() {
     }
@@ -43,32 +46,12 @@ class RegisterTaskDefinition extends AbstractECSTask {
             request.withVolumes(td.getVolumes())
             request.withContainerDefinitions(cd)
             RegisterTaskDefinitionResult res = getClient().registerTaskDefinition(request)
+            def newTd = res.getTaskDefinition()
+            taskDefinitionArn = newTd.getTaskDefinitionArn()
+            taskDefinitionName = "${newTd.getFamily()}:${newTd.getRevision()}"
+            
         }, {
             logger.debug("DryRun: RegisterTaskDefinition")
         })
     }
-    
-//    def configureRequest(Closure c) {
-//        c.delegate = request
-//        c()
-//        
-//        
-//        request.networkMode(NetworkMode.Bridge)
-//        request.task
-//    }
-//    
-//    def methodMissing(String name, args) {
-//        Method m = request.getClass().getMethod(name, getTypes(args))
-//        m.invoke(request, args)
-//    }
-//    
-//    def propertyMissing(String name, value) {
-//        request[name] = value
-//    }
-    
-//    def getTypes(Object... args) {
-//        Class[] rv = new Class[args.length]
-//        args.eachWithIndex {a, i -> rv[i] = a.getClass() }
-//        return rv
-//    }
 }
