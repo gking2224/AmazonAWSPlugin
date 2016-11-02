@@ -19,11 +19,12 @@ class ListServices extends AbstractECSTask {
 
     @TaskAction
     def doGetServices() {
-        project.dryRunExecute("ListServices", {
+        project.dryRunExecute("ListServices: cluster=$clusterName", {
             ListServicesRequest rq = new ListServicesRequest()
             rq.withCluster(clusterName)
             ListServicesResult rs = getClient().listServices(rq)
             serviceArns = rs.getServiceArns()
+            logger.info("Got services: $serviceArns")
         }, {
             logger.debug("DryRun: ListServices")
         })

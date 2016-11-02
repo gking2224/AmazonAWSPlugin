@@ -20,14 +20,15 @@ class GetAutoScalingGroups extends AbstractAutoScalingTask {
     @TaskAction
     def doTask() {
         
-        project.dryRunExecute("GetAutoScalingGroups", {
+        project.dryRunExecute("GetAutoScalingGroups: $names", {
             DescribeAutoScalingGroupsRequest rq = new DescribeAutoScalingGroupsRequest()
             rq.withAutoScalingGroupNames(names)
             
             DescribeAutoScalingGroupsResult rs = getClient().describeAutoScalingGroups(rq)
             autoScalingGroups = rs.getAutoScalingGroups()
+            logger.info("Got auto scaling groups: $autoScalingGroups")
         }, {
-            logger.debug("DryRun: GetInstances")
+            logger.debug("DryRun: GetInstances: $names")
         })
         
     }

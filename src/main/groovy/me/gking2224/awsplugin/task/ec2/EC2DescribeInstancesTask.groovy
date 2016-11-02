@@ -22,10 +22,12 @@ class EC2DescribeInstancesTask extends DefaultTask {
 	void doSomething() {
 		
 		if (instanceId == null) throw new GradleException("instanceId is required");
+        logger.info("DescribeInstances: keyName=$keyName; instanceId=$instanceId")
 		AmazonAWSPluginExtension ext = getProject().getExtensions().getByType(AmazonAWSPluginExtension.class)
 		AmazonEC2 ec2 = ext.getEc2Client()
 		DescribeInstancesRequest request = new DescribeInstancesRequest()
                 .withInstanceIds(instanceId.trim());
 		result = ec2.describeInstances(request);
+        logger.info("Got instances: $result")
 	}
 }

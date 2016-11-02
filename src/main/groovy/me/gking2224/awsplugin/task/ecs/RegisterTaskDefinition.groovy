@@ -28,7 +28,7 @@ class RegisterTaskDefinition extends AbstractECSTask {
 
     @TaskAction
     def registerTaskDefinition() {
-        project.dryRunExecute("RegisterTaskDefinition", {
+        project.dryRunExecute("RegisterTaskDefinition family=$family; image=$image", {
             DescribeTaskDefinitionRequest req = new DescribeTaskDefinitionRequest()
             req.setTaskDefinition(family)
             
@@ -49,6 +49,8 @@ class RegisterTaskDefinition extends AbstractECSTask {
             def newTd = res.getTaskDefinition()
             taskDefinitionArn = newTd.getTaskDefinitionArn()
             taskDefinitionName = "${newTd.getFamily()}:${newTd.getRevision()}"
+            
+            logger.info("registered task: $taskDefinitionArn")
             
         }, {
             logger.debug("DryRun: RegisterTaskDefinition")

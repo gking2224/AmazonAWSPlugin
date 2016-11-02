@@ -29,7 +29,7 @@ class GetInstances extends AbstractEC2Task {
     @TaskAction
     def doTask() {
         
-        project.dryRunExecute("GetInstances", {
+        project.dryRunExecute("GetInstances: service=$service; env=$env; version=$version", {
             DescribeInstancesRequest rq = new DescribeInstancesRequest()
             def filters =[]
             filters << new Filter("tag:service", Collections.singletonList(service))
@@ -42,6 +42,7 @@ class GetInstances extends AbstractEC2Task {
             rsv.each {r->
                 r.getInstances().each { instances << it }
             }
+            logger.info("Got instances: $instances")
         }, {
             logger.debug("DryRun: GetInstances")
         })
