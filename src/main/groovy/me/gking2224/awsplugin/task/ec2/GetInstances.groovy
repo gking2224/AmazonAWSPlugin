@@ -42,7 +42,7 @@ class GetInstances extends AbstractEC2Task {
             filters << new Filter("tag:service", Collections.singletonList(service))
             filters << new Filter("tag:env", Collections.singletonList(env))
             filters << new Filter("tag:version", Collections.singletonList(version))
-            filters << new Filter("instance-state-code", Collections.singletonList(RUNNING))
+            filters << new Filter("instance-state-name", Collections.singletonList(RUNNING))
             rq.setFilters(filters)
             
             DescribeInstancesResult rs = getClient().describeInstances(rq)
