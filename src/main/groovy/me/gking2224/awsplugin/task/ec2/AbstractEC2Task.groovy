@@ -16,8 +16,7 @@ public abstract class AbstractEC2Task extends AbstractAWSTask<AmazonEC2Client> {
     }
     
     AmazonEC2Client getClient() {
-        AmazonAWSPluginExtension ext = project.extensions.getByType(AmazonAWSPluginExtension.class)
-        ext.getEc2Client()
+        return super.getClient(AmazonEC2Client.class)
     }
     
     def getUniqueToken() {

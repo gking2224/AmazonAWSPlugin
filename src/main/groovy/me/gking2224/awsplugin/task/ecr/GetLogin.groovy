@@ -4,7 +4,6 @@ import org.gradle.api.logging.Logger
 import org.gradle.api.tasks.TaskAction
 
 import com.amazonaws.services.ecr.model.GetAuthorizationTokenRequest;
-import com.amazonaws.services.elasticloadbalancing.model.DescribeLoadBalancersResult
 
 
 

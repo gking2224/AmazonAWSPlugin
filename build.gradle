@@ -54,7 +54,7 @@ dependencies {
     compile "com.amazonaws:aws-java-sdk-ecs:$awsJavaSdkVersion"
     compile "com.amazonaws:aws-java-sdk-ecr:$awsJavaSdkVersion"
     compile "com.amazonaws:aws-java-sdk-autoscaling:$awsJavaSdkVersion"
-    compile "com.amazonaws:aws-java-sdk-elasticloadbalancing:$awsJavaSdkVersion"
+    compile "com.amazonaws:aws-java-sdk-elasticloadbalancingv2:$awsJavaSdkVersion"
     
 }
 

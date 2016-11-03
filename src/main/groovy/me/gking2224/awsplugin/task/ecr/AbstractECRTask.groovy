@@ -13,6 +13,6 @@ public abstract class AbstractECRTask extends AbstractAWSTask<AmazonECRClient> {
     
     AmazonECRClient getClient() {
         AmazonAWSPluginExtension ext = project.extensions.getByType(AmazonAWSPluginExtension.class)
-        ext.getEcrClient()
+        ext.getClient(AmazonECRClient.class)
     }
 }

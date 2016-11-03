@@ -21,7 +21,6 @@ import com.amazonaws.services.autoscaling.AmazonAutoScalingClient
 import com.amazonaws.services.ec2.AmazonEC2Client
 import com.amazonaws.services.ecr.AmazonECRClient
 import com.amazonaws.services.ecs.AmazonECSClient
-import com.amazonaws.services.elasticloadbalancing.AmazonElasticLoadBalancingClient
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagement
 import com.amazonaws.services.identitymanagement.AmazonIdentityManagementClient
 import com.amazonaws.services.identitymanagement.model.GetUserResult
@@ -47,16 +46,6 @@ class AmazonAWSPluginExtension {
     
     def clients = [:]
     
-    private AmazonEC2Client ec2Client
-    
-    private AmazonElasticLoadBalancingClient elbClient
-    
-    private AmazonECRClient ecrClient
-    
-    private AmazonECSClient ecsClient
-    
-    private AmazonAutoScalingClient autoScalingClient
-
     public AmazonAWSPluginExtension(Project project) {
         this.project = project;
     }
@@ -64,26 +53,6 @@ class AmazonAWSPluginExtension {
     protected <T extends AmazonWebServiceClient> T getClient(Class<T> clz) {
         if (clients[clz] == null) clients[clz] = initClient(clz)
         return clients[clz]
-    }
-    
-    def getEc2Client() {
-        if (ec2Client == null) ec2Client = initClient(com.amazonaws.services.ec2.AmazonEC2Client.class);
-        return ec2Client
-    }
-    
-    def getElbClient() {
-        if (elbClient == null) elbClient = initClient(com.amazonaws.services.elasticloadbalancing.AmazonElasticLoadBalancingClient.class);
-        return elbClient
-    }
-    
-    def getEcrClient() {
-        if (ecrClient == null) ecrClient = initClient(com.amazonaws.services.ecr.AmazonECRClient.class);
-        return ecrClient
-    }
-    
-    def getEcsClient() {
-        if (ecsClient == null) ecsClient = initClient(com.amazonaws.services.ecs.AmazonECSClient.class);
-        return ecsClient
     }
     
     public AWSCredentialsProvider newCredentialsProvider(String profileName) {
