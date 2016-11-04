@@ -26,7 +26,7 @@ class GetLogin extends AbstractECRTask {
             String token = new String(Base64.getDecoder().decode(authData.authorizationToken))
             def tz = new StringTokenizer(token, ":")
             
-            logger.info("Got login $tz")
+            logger.info("Got login $token")
             project.ext.ecrUsername = tz.nextToken()
             project.ext.ecrPassword = tz.nextToken()
             
