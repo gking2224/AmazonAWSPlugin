@@ -5,8 +5,6 @@ import org.gradle.api.tasks.TaskAction
 
 import com.amazonaws.services.ecr.model.GetAuthorizationTokenRequest;
 
-
-
 class GetLogin extends AbstractECRTask {
     
     def registryId
@@ -16,7 +14,7 @@ class GetLogin extends AbstractECRTask {
 
     @TaskAction
     def getLogin() {
-        project.dryRunExecute("GetLogin", {
+        project.dryRunExecute("GetLogin registryId=$registryId", {
             
             def req = new GetAuthorizationTokenRequest()
             req.withRegistryIds(registryId)
@@ -27,6 +25,8 @@ class GetLogin extends AbstractECRTask {
             
             String token = new String(Base64.getDecoder().decode(authData.authorizationToken))
             def tz = new StringTokenizer(token, ":")
+            
+            logger.info("Got login $tz")
             project.ext.ecrUsername = tz.nextToken()
             project.ext.ecrPassword = tz.nextToken()
             
