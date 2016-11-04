@@ -6,7 +6,7 @@ buildscript {
         maven { url= "http://nexus.gking2224.me/nexus/content/repositories/snapshots" }
     }
     dependencies {
-        classpath "me.gking2224:BuildToolsGradlePlugin:0.2.6"
+        classpath group:"me.gking2224", name:"BuildToolsGradlePlugin", version:"0.2.+", changing: true
     }
 }
 
@@ -47,7 +47,7 @@ dependencies {
     compile gradleApi()
     compile localGroovy()
     testCompile "junit:junit:$junitVersion"
-    testCompile "me.gking2224:BuildToolsGradlePlugin:0.2.+"
+    testCompile group:"me.gking2224", name:"BuildToolsGradlePlugin", version:"0.2.+", changing: true
     
     compile "com.amazonaws:aws-java-sdk-ec2:$awsJavaSdkVersion"
     compile "com.amazonaws:aws-java-sdk-iam:$awsJavaSdkVersion"
