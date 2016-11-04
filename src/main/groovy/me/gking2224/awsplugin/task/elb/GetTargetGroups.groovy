@@ -32,6 +32,7 @@ class GetTargetGroups extends AbstractELBTask {
             
             def _targetGroups = getClient().describeTargetGroups(new DescribeTargetGroupsRequest()).getTargetGroups()
             if (!_multipleVersions && !_multipleEnvs) {
+                logger.info("Got targetGroups: $targetGroups")
                 targetGroups = _targetGroups
                 return
             }
@@ -47,6 +48,7 @@ class GetTargetGroups extends AbstractELBTask {
             }
             _targetGroups.each { mapTargetGroup(it, _targetGroupTags[it.getTargetGroupArn()]) }
             
+            logger.info("Got targetGroups: $targetGroups")
             
         }, {
             logger.debug("DryRun: GetTargetGroups")

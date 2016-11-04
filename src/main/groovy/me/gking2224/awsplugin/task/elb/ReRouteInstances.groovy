@@ -24,7 +24,7 @@ class ReRouteInstances extends AbstractELBTask {
 
     @TaskAction
     def doTask() {
-        project.dryRunExecute("ReRouteInstances", {
+        project.dryRunExecute("ReRouteInstances fromTargetGroupArn:$fromTargetGroupArn, toTargetGroupArn:$toTargetGroupArn, instanceIds:$instanceIds, newVersionTag:$newVersionTag, port:$port", {
             if (instanceIds == null || instanceIds.size() == 0) return
             
             def targets = instanceIds.collect { new TargetDescription().withPort(port).withId(it) }

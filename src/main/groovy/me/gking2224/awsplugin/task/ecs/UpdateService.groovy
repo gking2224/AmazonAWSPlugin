@@ -21,13 +21,14 @@ class UpdateService extends AbstractECSTask {
 
     @TaskAction
     def doUpdateService() {
-        project.dryRunExecute("UpdateService", {
+        project.dryRunExecute("UpdateService clusterName=$clusterName; service=$service; taskDefinitionArn=$taskDefinitionArn", {
             UpdateServiceRequest rq = new UpdateServiceRequest()
             rq.withCluster(clusterName)
             rq.withService(service)
             rq.withTaskDefinition(taskDefinitionArn)
             UpdateServiceResult rs = getClient().updateService(rq)
             updatedService = rs.getService()
+            logger.debug "Updated service: $updatedService"
         }, {
             logger.debug("DryRun: UpdateService")
         })
