@@ -23,7 +23,10 @@ class DeRegisterTargets extends AbstractELBTask {
     @TaskAction
     def doTask() {
         project.dryRunExecute("DeRegisterTargets fromTargetGroupArn:$targetGroupArn, instanceIds:$instanceIds, port:$port", {
-            if (instanceIds == null || instanceIds.size() == 0) return
+            if (instanceIds == null || instanceIds.size() == 0) {
+                logger.debug("Nothing to do")
+                return
+            }
             
             def targets = instanceIds.collect { new TargetDescription().withPort(port).withId(it) }
             
