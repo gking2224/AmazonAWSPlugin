@@ -27,7 +27,8 @@ class UpdateService extends AbstractECSTask {
             taskDefinitionArns.each{ family, arn ->
                 UpdateServiceRequest rq = new UpdateServiceRequest()
                 rq.withCluster(clusterName)
-                def service = "arn:aws:ecs:$region:${project.dockerEcrRegistryId}:service/$family-$suffix"
+                def service = "arn:aws:ecs:$region:${project.dockerEcrRegistryId}:service/$family"
+                logger.info("using service $service")
                 rq.withService(service)
                 def taskDefinitionArn = taskDefinitionArns[family]
                 rq.withTaskDefinition(taskDefinitionArn)
