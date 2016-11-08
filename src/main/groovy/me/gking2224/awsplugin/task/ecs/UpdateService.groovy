@@ -11,8 +11,8 @@ import com.amazonaws.services.ecs.model.UpdateServiceResult
 class UpdateService extends AbstractECSTask {
     
     def clusterName
-    def taskDefinitionArns
     def serviceSuffix = ""
+    def taskDefinitionArns
 
     def updatedServices = [:]
     
