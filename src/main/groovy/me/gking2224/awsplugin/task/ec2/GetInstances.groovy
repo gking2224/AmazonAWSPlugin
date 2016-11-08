@@ -23,8 +23,6 @@ class GetInstances extends AbstractEC2Task {
 
     static final String CLIENT_TOKEN_FILTER = "client-token"
     static final String INSTANCE_IDS = "instance-ids"
-    static final String STATE_NAME_FILTER = "instance-state-name"
-    static final String STATE_RUNNING = "running"
     
     def service
     def env
@@ -54,7 +52,6 @@ class GetInstances extends AbstractEC2Task {
             filters << new Filter("tag:service", Collections.singletonList(service))
             if (e != null) filters << new Filter("tag:env", e)
             if (v != null) filters << new Filter("tag:version", v)
-//            filters << new Filter("instance-state-name", Collections.singletonList(RUNNING))
             rq.setFilters(filters)
             
             DescribeInstancesResult rs = getClient().describeInstances(rq)

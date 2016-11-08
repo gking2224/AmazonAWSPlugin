@@ -14,4 +14,9 @@ public abstract class AbstractAWSTask<T> extends DefaultTask {
         AmazonAWSPluginExtension ext = project.extensions.getByType(AmazonAWSPluginExtension.class)
         return ext.getClient(clz)
     }
+    
+    protected String getRegion() {
+        AmazonAWSPluginExtension ext = project.extensions.getByType(AmazonAWSPluginExtension.class)
+        return ext.region
+    }
 }

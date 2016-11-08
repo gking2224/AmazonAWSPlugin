@@ -17,43 +17,56 @@ import com.amazonaws.services.ecs.model.TaskDefinition
 
 class RegisterTaskDefinition extends AbstractECSTask {
     
-    def family
+    def families = [] as Set
     def image
     
-    def taskDefinitionArn
-    def taskDefinitionName
+    def taskDefinitionArns = [:]
+    def taskDefinitionNames = [:]
 
     public RegisterTaskDefinition() {
     }
 
     @TaskAction
     def registerTaskDefinition() {
-        project.dryRunExecute("RegisterTaskDefinition family=$family; image=$image", {
-            DescribeTaskDefinitionRequest req = new DescribeTaskDefinitionRequest()
-            req.setTaskDefinition(family)
+        project.dryRunExecute("RegisterTaskDefinition families=$families; image=$image", {
             
-            DescribeTaskDefinitionResult tdRes = getClient().describeTaskDefinition(req)
-            TaskDefinition td = tdRes.getTaskDefinition()
-            
-            td.setRevision(td.getRevision() + 1)
-            ContainerDefinition cd = td.getContainerDefinitions().get(0)
-            logger.info("Setting image to "+image)
-            cd.setImage(image)
-            
-            RegisterTaskDefinitionRequest request = new RegisterTaskDefinitionRequest()
-            request.withFamily(td.getFamily())
-            request.withNetworkMode(td.getNetworkMode())
-            request.withVolumes(td.getVolumes())
-            request.withContainerDefinitions(cd)
-            RegisterTaskDefinitionResult res = getClient().registerTaskDefinition(request)
-            def newTd = res.getTaskDefinition()
-            taskDefinitionArn = newTd.getTaskDefinitionArn()
-            taskDefinitionName = "${newTd.getFamily()}:${newTd.getRevision()}"
-            
-            logger.info("registered task: $taskDefinitionArn")
+            families.each { family ->
+                
+                // get details of the latest task definition for the family
+                DescribeTaskDefinitionRequest req = new DescribeTaskDefinitionRequest()
+                req.setTaskDefinition(family)
+                DescribeTaskDefinitionResult tdRes = getClient().describeTaskDefinition(req)
+                
+                TaskDefinition td = tdRes.getTaskDefinition()
+                
+                // reuse existing task definition - increment version
+                td.setRevision(td.getRevision() + 1)
+                ContainerDefinition cd = td.getContainerDefinitions().get(0)
+                logger.info("Setting image for $family revision $revision to $image")
+                cd.setImage(image)
+                
+                // do update
+                RegisterTaskDefinitionRequest request = new RegisterTaskDefinitionRequest()
+                request.withFamily(td.getFamily())
+                request.withNetworkMode(td.getNetworkMode())
+                request.withVolumes(td.getVolumes())
+                request.withContainerDefinitions(cd)
+                
+                // get arn/name from result
+                RegisterTaskDefinitionResult res = getClient().registerTaskDefinition(request)
+                def newTd = res.getTaskDefinition()
+                taskDefinitionArns[family] = newTd.getTaskDefinitionArn()
+                taskDefinitionNames[family] = "${newTd.getFamily()}:${newTd.getRevision()}"
+                
+                logger.info("registered task: $taskDefinitionArn")
+            }
             
         }, {
             logger.debug("DryRun: RegisterTaskDefinition")
         })
+    }
+    
+    def family(String family) {
+        families << family
     }
 }
