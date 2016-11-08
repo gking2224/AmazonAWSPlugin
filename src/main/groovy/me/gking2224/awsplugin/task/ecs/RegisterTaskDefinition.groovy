@@ -40,7 +40,8 @@ class RegisterTaskDefinition extends AbstractECSTask {
                 TaskDefinition td = tdRes.getTaskDefinition()
                 
                 // reuse existing task definition - increment version
-                td.setRevision(td.getRevision() + 1)
+                def revision = td.getRevision() + 1
+                td.setRevision(revision)
                 ContainerDefinition cd = td.getContainerDefinitions().get(0)
                 logger.info("Setting image for $family revision $revision to $image")
                 cd.setImage(image)
@@ -55,7 +56,8 @@ class RegisterTaskDefinition extends AbstractECSTask {
                 // get arn/name from result
                 RegisterTaskDefinitionResult res = getClient().registerTaskDefinition(request)
                 def newTd = res.getTaskDefinition()
-                taskDefinitionArns[family] = newTd.getTaskDefinitionArn()
+                def taskDefinitionArn = newTd.getTaskDefinitionArn()
+                taskDefinitionArns[family] = taskDefinitionArn
                 taskDefinitionNames[family] = "${newTd.getFamily()}:${newTd.getRevision()}"
                 
                 logger.info("registered task: $taskDefinitionArn")
