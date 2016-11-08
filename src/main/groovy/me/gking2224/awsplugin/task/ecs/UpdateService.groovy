@@ -12,7 +12,7 @@ class UpdateService extends AbstractECSTask {
     
     def clusterName
     def taskDefinitionArns
-    def serviceArnPrefix
+    def serviceSuffix = ""
 
     def updatedServices = [:]
     
@@ -21,12 +21,13 @@ class UpdateService extends AbstractECSTask {
 
     @TaskAction
     def doUpdateService() {
-        project.dryRunExecute("UpdateService clusterName=$clusterName; taskDefinitionArns=$taskDefinitionArns", {
+        project.dryRunExecute("UpdateService clusterName=$clusterName; taskDefinitionArns=$taskDefinitionArns; serviceSuffix=$serviceSuffix", {
             
+            def suffix = (serviceSuffix != "") ? "-$serviceSuffix" : ""
             taskDefinitionArns.each{ family, arn ->
                 UpdateServiceRequest rq = new UpdateServiceRequest()
                 rq.withCluster(clusterName)
-                def service = "arn:aws:ecs:$region:${project.dockerEcrRegistryId}:service/$family"
+                def service = "arn:aws:ecs:$region:${project.dockerEcrRegistryId}:service/$family-$suffix"
                 rq.withService(service)
                 def taskDefinitionArn = taskDefinitionArns[family]
                 rq.withTaskDefinition(taskDefinitionArn)
